@@ -14,4 +14,7 @@ Gem::Specification.new do |gem|
   gem.name          = "fontsquirrel-download"
   gem.require_paths = ["lib"]
   gem.version       = FontSquirrel::VERSION
+
+  gem.add_dependency "rubyzip"
+  gem.add_dependency "rails", ">= 3.1"
 end
