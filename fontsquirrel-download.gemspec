@@ -4,9 +4,9 @@ require File.expand_path('../lib/fontsquirrel-download/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Stefan Wienert"]
   gem.email         = ["stefan.wienert@pludoni.de"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
-  gem.homepage      = ""
+  gem.description   = %q{ Download and extract font-kits from fontsquirrel easily with a rake tasks.}
+  gem.summary       = %q{ Download and extract font-kits from fontsquirrel easily with a rake tasks.}
+  gem.homepage      = "https://github.com/zealot128/fontsquirrel-download"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
