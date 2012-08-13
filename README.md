@@ -44,3 +44,9 @@ The names always vary a little, just look them up in the \_fonts.css.sass
 
 
 
+
+## Potential ToDo
+
+* Until know, it will download the normal subset of the font.
+  Some fonts have no special chars (like German Umlauts) at all, some have them in a subset. Maybe specifying the subset comes in handy.
+* Downloading not only font-kits but all the other fonts...
