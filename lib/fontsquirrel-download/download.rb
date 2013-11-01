@@ -5,7 +5,7 @@ module FontSquirrel
     TEMPLATE = <<-DOC
 @font-face
   font-family: "{{name}}"
-{{src}}
+  {{src}}
   font-weight: {{weight}}
   font-style: {{style}}
 DOC
