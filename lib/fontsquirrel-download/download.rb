@@ -2,6 +2,14 @@ require "open-uri"
 require "zip/zip"
 module FontSquirrel
   class Download
+    TEMPLATE = <<-DOC
+@font-face
+  font-family: "{{name}}"
+{{src}}
+  font-weight: {{weight}}
+  font-style: {{style}}
+DOC
+
     # Provide Font-Name as written in URL of font-squirrel,
     # like TeX-Gyre-Bonum
     def initialize(name,options={})
@@ -9,21 +17,23 @@ module FontSquirrel
       @name = name
       download(name)
       FileUtils.mkdir_p @options[:font_dir]
-      Zip::ZipFile.open(@options[:tmp_name]) do |zipfile|
-        zipfile.each do |entry|
-          case entry.name
-          when %r{/stylesheet.css$}
-            append_stylesheet(entry)
-          when /ttf|woff|eot|svg/
-            extract_font(entry)
-          end
+      zipfile = nil
+      quietly do
+        zipfile = Zip::ZipFile.open(@options[:tmp_name])
+      end
+      zipfile.each do |entry|
+        case entry.name
+        when %r{/stylesheet.css$}
+          append_stylesheet(entry)
+        when /ttf|woff|eot|svg/
+          extract_font(entry)
         end
       end
+
       FileUtils.rm @options[:tmp_name].to_s
-
+    ensure
+      zipfile.close
     end
-
-
 
     private
 
@@ -33,8 +43,22 @@ module FontSquirrel
       content = entry.get_input_stream.read
       text = Sass::Engine.new(content, syntax: :scss).to_tree.to_sass
       text.gsub!(/url\(([^\)]+)\)/, "asset-url(\\1, font)")
-      log "Writing new font-definitions to #{@options[:font_file].to_s}"
-      File.open(@options[:font_file].to_s, "a") {|f| f.write text }
+      headline =  text.lines.grep(/font-family/).first
+      weight = 'normal'
+      style  = 'normal'
+      if headline[  /italic/ ]
+        style  = 'italic'
+      end
+      if headline[ /bold/ ]
+        weight = 'bold'
+      end
+      template = TEMPLATE.
+        gsub('{{name}}', @name).
+        gsub('{{weight}}', weight).
+        gsub('{{style}}', style).
+        gsub('{{src}}', text.lines.grep(/src:/).join.strip)
+      log "Writing new font-definitions to #{@options[:font_file].to_s} ( Font-Family: #{@name}, #{style}, #{weight})"
+      File.open(@options[:font_file].to_s, "a") {|f| f.write template }
     end
 
     def extract_font(entry)
@@ -55,3 +79,5 @@ module FontSquirrel
 
   end
 end
+
+__END__
