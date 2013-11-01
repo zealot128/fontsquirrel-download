@@ -12,7 +12,7 @@ module FontSquirrel
       Zip::ZipFile.open(@options[:tmp_name]) do |zipfile|
         zipfile.each do |entry|
           case entry.name
-          when /stylesheet.css/
+          when %r{/stylesheet.css$}
             append_stylesheet(entry)
           when /ttf|woff|eot|svg/
             extract_font(entry)
@@ -26,7 +26,9 @@ module FontSquirrel
 
 
     private
+
     def name; @name; end
+
     def append_stylesheet(entry)
       content = entry.get_input_stream.read
       text = Sass::Engine.new(content, syntax: :scss).to_tree.to_sass
@@ -36,7 +38,7 @@ module FontSquirrel
     end
 
     def extract_font(entry)
-      target = @options[:font_dir].join(entry.name).to_s
+      target = @options[:font_dir].join(File.basename entry.to_s).to_s
       FileUtils.copy_stream entry.get_input_stream, File.open(target, "wb+")
       log "Extracting #{target}"
     end

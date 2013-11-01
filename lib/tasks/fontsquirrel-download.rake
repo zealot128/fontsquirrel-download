@@ -9,9 +9,9 @@ namespace :font do
     end
     require "fontsquirrel-download/download"
     FontSquirrel::Download.new name,
-                               tmp_name:  Rails.root.join("tmp/fontsquirrel.zip").to_s,
-                               font_file: Rails.root.join("app/assets/stylesheets/_fonts.css.sass"),
-                               font_dir:  Rails.root.join("app/assets/fonts")
+      tmp_name:  Rails.root.join("tmp/fontsquirrel.zip").to_s,
+      font_file: Rails.root.join("app/assets/stylesheets/_fonts.css.sass"),
+      font_dir:  Rails.root.join("app/assets/fonts")
 
   end
 end
