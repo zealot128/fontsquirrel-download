@@ -1,5 +1,5 @@
 require "open-uri"
-require "zip/zip"
+require "zip"
 module FontSquirrel
   class Download
     TEMPLATE = <<-DOC
@@ -19,7 +19,7 @@ DOC
       FileUtils.mkdir_p @options[:font_dir]
       zipfile = nil
       quietly do
-        zipfile = Zip::ZipFile.open(@options[:tmp_name])
+        zipfile = Zip::File.open(@options[:tmp_name])
       end
       zipfile.each do |entry|
         case entry.name
@@ -32,7 +32,7 @@ DOC
 
       FileUtils.rm @options[:tmp_name].to_s
     ensure
-      zipfile.close
+      zipfile.close if zipfile.present?
     end
 
     private
