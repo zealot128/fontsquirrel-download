@@ -13,6 +13,7 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.name          = "fontsquirrel-download"
   gem.require_paths = ["lib"]
+  gem.license       = 'MIT'
   gem.version       = FontSquirrel::VERSION
 
   gem.add_dependency "rubyzip"
