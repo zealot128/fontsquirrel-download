@@ -18,7 +18,7 @@ Add to your application.css/application.css.scss:
 //= require fonts
 ```
 
-Because the download will append the necessary changes to ``app/assets/stylesheets/_fonts.css.sass``.
+Because the download will append the necessary changes to ``app/assets/stylesheets/_fonts.scss``.
 
 ## Usage
 
@@ -27,10 +27,10 @@ Because the download will append the necessary changes to ``app/assets/styleshee
 Use Rake task, specify the Font name as written in the URL from font-squirrel, e.g. the well-known LaTeX-Font:
 
 ```bash
-rake font:kit NAME=TeX-Gyre-Bonum
+rake font:download NAME=TeX-Gyre-Bonum
 ```
 
-This will download the fonts to ``app/assets/fonts`` and append the style rules to ``app/assets/stylesheets/_fonts.css.sass``.
+This will download the fonts to ``app/assets/fonts`` and append the style rules to ``app/assets/stylesheets/_fonts.scss``.
 
 After that, you can use that style definition in your css rules, like:
 
@@ -40,13 +40,19 @@ body {
 }
 ```
 
-The names always vary a little, just look them up in the \_fonts.css.sass
+The names always vary a little, just look them up in the \_fonts.scss
 
 
+## Webfont-Kits
+
+You can also create font-kits with Fontsquirrel's great Webfont-generator and extract+apply that zipfile and merge a meaningful scss-file with correct font weight and style:
+
+```
+rake font:install FILE=/tmp/webfontkit-123.zip
+```
 
 
-## Potential ToDo
+## Limitations
 
 * Until know, it will download the normal subset of the font.
   Some fonts have no special chars (like German Umlauts) at all, some have them in a subset. Maybe specifying the subset comes in handy.
-* Downloading not only font-kits but all the other fonts...

@@ -16,7 +16,6 @@ Gem::Specification.new do |gem|
   gem.license       = 'MIT'
   gem.version       = FontSquirrel::VERSION
 
-  gem.add_dependency "rubyzip"
   gem.add_dependency "rails", ">= 3.1"
   gem.add_dependency "rubyzip", ">= 1.0"
 end
