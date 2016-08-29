@@ -1,5 +1,7 @@
 # Fontsquirrel::Download
 
+[![Gem Version](https://badge.fury.io/rb/fontsquirrel-download.svg)](https://badge.fury.io/rb/fontsquirrel-download)
+
 Download and extract font-kits from [fontsquirrel](http://www.fontsquirrel.com/fontface) easily with a rake tasks.
 
 ## Installation
